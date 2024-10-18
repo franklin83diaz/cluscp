@@ -3,6 +3,7 @@ package utils
 import (
 	"math/big"
 	"net"
+	"reflect"
 	"testing"
 )
 
@@ -48,6 +49,38 @@ func Test_intToIP(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := intToIP(tt.args.ipInt); !got.Equal(tt.want) {
 				t.Errorf("intToIP() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestGetIpList(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    []string
+		wantErr bool
+	}{
+		{"1 Test GetIpList IP", args{"10.0.0.1-2"}, []string{"10.0.0.1", "10.0.0.2"}, false},
+		{"2 Test GetIpList IP", args{"0.0.0.0-0.0.0.0.0"}, nil, true},
+		{"3 Test GetIpList IP", args{"0.0.0.0.0-2"}, nil, true},
+		{"4 Test GetIpList IP", args{"256.0.0.0-2"}, nil, true},
+		{"5 Test GetIpList IP", args{"10.0.0.1-256"}, nil, true},
+		{"5 Test GetIpList IP", args{"10.0.0.1"}, nil, true},
+		{"6 Test GetIpList IP", args{"10.0.0.1-10.0.0.2"}, []string{"10.0.0.1", "10.0.0.2"}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := GetIpList(tt.args.s)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetIpList() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("GetIpList() = %v, want %v", got, tt.want)
 			}
 		})
 	}

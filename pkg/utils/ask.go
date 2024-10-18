@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"strings"
 )
 
 func AskOptions(s string, want []string) string {
@@ -9,7 +10,9 @@ func AskOptions(s string, want []string) string {
 	var resp string
 	fmt.Scanln(&resp)
 
-	if Contains(want, resp) {
+	resp = strings.TrimSpace(resp)
+
+	if !Contains(want, resp) {
 		AskOptions(s, want)
 		fmt.Println("Invalid option")
 		return resp
@@ -21,6 +24,8 @@ func AskMinLength(s string, minLength int) string {
 	fmt.Println(s)
 	var resp string
 	fmt.Scanln(&resp)
+
+	resp = strings.TrimSpace(resp)
 
 	if len(resp) < minLength {
 		if len(resp) == 0 {

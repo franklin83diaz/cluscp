@@ -8,12 +8,14 @@ const (
 	hostname
 )
 
-func (h HostsType) Set(s string) {
+func (h *HostsType) Set(s string) {
 	if s == "I" || s == "i" {
-		h = ip
+		*h = ip
+		return
 	}
 	if s == "H" || s == "h" {
-		h = hostname
+		*h = hostname
+		return
 	}
-	h = unknown
+	*h = unknown
 }

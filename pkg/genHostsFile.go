@@ -3,9 +3,13 @@ package pkg
 import (
 	"cluscp/entities"
 	"cluscp/pkg/utils"
+	"fmt"
 	"os"
 )
 
+// GenerateHostsFile generates a file with a list of hosts
+// Receives no parameters get the data from the user stdin
+// if has an error do a panic
 func GenerateHostsFile() {
 	// Define the type of hosts unknown
 	hostOrIp := entities.HostsType(0)
@@ -21,30 +25,32 @@ func GenerateHostsFile() {
 
 	// entities.HostsType(1) is the value of ip
 	// entities.HostsType(2) is the value of hostname
+	fmt.Println(hostOrIp)
 	if hostOrIp == entities.HostsType(1) {
 		// Ask for the ip
-		ips := utils.AskMinLength("Enter the Range of ips (example 10.0.0.1-200):", 7)
+		ipsRange := utils.AskMinLength("Enter the Range of ips (example 10.0.0.1-200):", 7)
+		ips, err := utils.GetIpList(ipsRange)
+		if err != nil {
+			panic(err)
+		}
 		createHostsFile(fileHost, ips)
 	}
 }
 
-func createHostsFile(fileHost string, ips string) {
+func createHostsFile(fileHost string, ips []string) {
 	// Create the file
 	file, err := os.Create(fileHost)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
-	// ips = strings.TrimSpace(ips)
-	// ipsSplit := strings.Split(ips, "-")
-
-	// ipStart := strings.Split(ipsSplit[0], ".")
-	// ipEnd := strings.Split(ipsSplit[1], ".")
 
 	// Write the ips in the file
-	_, err = file.WriteString(ips)
-	if err != nil {
-		panic(err)
+	for _, ip := range ips {
+		_, err = file.WriteString(ip + "\n")
+		if err != nil {
+			panic(err)
+		}
 	}
 
 }

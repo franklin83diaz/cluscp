@@ -28,7 +28,7 @@ func ReadHosts(fileHost string) ([]string, error) {
 		return nil, fmt.Errorf("file %s is empty", fileHost)
 	}
 
-	if fileSize > 1024*5000000 /* 5MB */ {
+	if fileSize > 5120000000 /* 5MB */ {
 		return nil, fmt.Errorf("file %s is too large", fileHost)
 	}
 
@@ -39,7 +39,6 @@ func ReadHosts(fileHost string) ([]string, error) {
 	file.Read(buffer)
 
 	//!TODO: Implement the logic to read the hosts from the file
-
 	return []string{}, nil
 
 }
