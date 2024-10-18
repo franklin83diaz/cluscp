@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
@@ -32,13 +33,14 @@ func ReadHosts(fileHost string) ([]string, error) {
 		return nil, fmt.Errorf("file %s is too large", fileHost)
 	}
 
-	//Create Buffer
-	buffer := make([]byte, fileSize)
+	scanner := bufio.NewScanner(file)
+	hosts := []string{}
 
-	//Read the file
-	file.Read(buffer)
+	for scanner.Scan() {
+		hosts = append(hosts, scanner.Text())
+	}
 
 	//!TODO: Implement the logic to read the hosts from the file
-	return []string{}, nil
+	return hosts, nil
 
 }

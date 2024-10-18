@@ -29,6 +29,8 @@ Para instalar **cluscp**, sigue estos pasos:
 
    Nota: La instalación en los nodos no es obligatoria, pero puede ahorrar tiempo durante el copiado.
 
+   Nota: el primero host en el nodo de conexion y se usa para distrubuir a la red privada en caso de.
+
 ## Uso
 
 La sintaxis básica para utilizar **cluscp** es la siguiente:
