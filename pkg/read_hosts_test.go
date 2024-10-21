@@ -7,7 +7,7 @@ import (
 )
 
 func TestReadHosts(t *testing.T) {
-	createHostsFile("hosts_test", []string{"192.0.2.1", "192.0.2.2"})
+	CreateHostsFile("hosts_test", []string{"192.0.2.1", "192.0.2.2"})
 	type args struct {
 		fileHost string
 	}

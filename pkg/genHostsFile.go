@@ -34,7 +34,7 @@ func GenerateHostsFile() {
 		if err != nil {
 			panic(err)
 		}
-		createHostsFile(fileHost, ips)
+		CreateHostsFile(fileHost, ips)
 	}
 	// if the user choose hostname
 	if hostOrIp == entities.HostsType(2) {
@@ -49,11 +49,11 @@ func GenerateHostsFile() {
 			panic(err)
 		}
 
-		createHostsFile(fileHost, fqdnList)
+		CreateHostsFile(fileHost, fqdnList)
 	}
 }
 
-func createHostsFile(fileHost string, hosts []string) {
+func CreateHostsFile(fileHost string, hosts []string) {
 	// Create the file
 	file, err := os.Create(fileHost)
 	if err != nil {
