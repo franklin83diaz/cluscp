@@ -38,3 +38,8 @@ La sintaxis básica para utilizar **cluscp** es la siguiente:
 ### Ejemplos
 
 - Para copiar un archivo simple:
+
+### Posibles nombre:
+copyc
+ccopy
+mcopy
