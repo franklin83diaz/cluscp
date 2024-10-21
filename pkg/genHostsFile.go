@@ -25,6 +25,7 @@ func GenerateHostsFile() {
 
 	// entities.HostsType(1) is the value of ip
 	// entities.HostsType(2) is the value of hostname
+	// if the user choose ip
 	fmt.Println(hostOrIp)
 	if hostOrIp == entities.HostsType(1) {
 		// Ask for the ip
@@ -35,9 +36,24 @@ func GenerateHostsFile() {
 		}
 		createHostsFile(fileHost, ips)
 	}
+	// if the user choose hostname
+	if hostOrIp == entities.HostsType(2) {
+		// Ask for the hostname
+		hostname := utils.AskMinLength("Enter the hostname:", 1)
+		start := utils.AskNumber("Counter start:", 0, 4294967295)
+		end := utils.AskNumber("Counter end:", 0, 4294967295)
+		domain := utils.AskMinLength("Enter the domain:", 1)
+
+		fqdnList, err := utils.GetFqdnList(hostname, start, end, domain)
+		if err != nil {
+			panic(err)
+		}
+
+		createHostsFile(fileHost, fqdnList)
+	}
 }
 
-func createHostsFile(fileHost string, ips []string) {
+func createHostsFile(fileHost string, hosts []string) {
 	// Create the file
 	file, err := os.Create(fileHost)
 	if err != nil {
@@ -46,8 +62,8 @@ func createHostsFile(fileHost string, ips []string) {
 	defer file.Close()
 
 	// Write the ips in the file
-	for _, ip := range ips {
-		_, err = file.WriteString(ip + "\n")
+	for _, host := range hosts {
+		_, err = file.WriteString(host + "\n")
 		if err != nil {
 			panic(err)
 		}
