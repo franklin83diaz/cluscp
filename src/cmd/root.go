@@ -15,8 +15,17 @@ var rootCmd = &cobra.Command{
 	for copying files to 1 node as to 1000 nodes, without the need to use 
 	multicast or broadcast.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		//execute help
-		cmd.Help()
+
+		if len(args) < 2 {
+			// execute help
+			cmd.Help()
+			return
+		}
+
+		//Copy files to cluster
+		if len(args) == 2 {
+		}
+
 	},
 }
 
